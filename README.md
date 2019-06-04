@@ -1,14 +1,6 @@
-
-# Initialization
-
-- Get current config from modulesync_config
-- Change the default branch to production when finished
-- Generate new Travis secure notification using the Travis
-- Remove this paragraph and change Travis branch to production
-
 # vision-traefik
 
-[![Build Status](https://travis-ci.org/vision-it/vision-traefik.svg?branch=development)](https://travis-ci.org/vision-it/vision-traefik)
+[![Build Status](https://travis-ci.org/vision-it/vision-traefik.svg)](https://travis-ci.org/vision-it/vision-traefik)
 
 ## Usage
 
