@@ -1,0 +1,3 @@
+---
+vision_traefik::environment: [ 'foo=bar' ]
+vision_traefik::version: 'abc123'

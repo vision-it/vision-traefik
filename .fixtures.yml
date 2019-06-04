@@ -1,0 +1,11 @@
+---
+fixtures:
+  repositories:
+    stdlib:
+      ref: "4.24.0"
+      repo: "https://github.com/puppetlabs/puppetlabs-stdlib"
+    vision_docker:
+      ref: "production"
+      repo: "https://github.com/vision-it/vision-docker"
+  symlinks:
+    vision_traefik: '#{source_dir}'

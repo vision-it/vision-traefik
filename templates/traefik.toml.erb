@@ -1,0 +1,25 @@
+# This file is managed by Puppet; Do not edit
+# traefik.toml - Traefik configuration file
+# https://docs.traefik.io/configuration/commons/
+
+checkNewVersion = false
+defaultEntryPoints = ["http", "https"]
+
+[docker]
+exposedByDefault = false
+swarmMode = true
+swarmModeRefreshSeconds = 60
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+#    [entryPoints.http.redirect]
+#    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+  [entryPoint.traefik]
+  address = ":8080"
+
+[api]
+entryPoint = "traefik"
