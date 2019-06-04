@@ -9,7 +9,7 @@ matrix:
   allow_failures:
     - env: STRICT_VARIABLES="yes" CHECK="rubocop"
       bundler_args: --without testing acceptance
-    - env: STRICT_VARIABLES="yes" CHECK="beaker"
+    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_PUPPET_COLLECTION="puppet5"
       bundler_args: --without rubocop
       services: docker
       sudo: required
@@ -22,11 +22,11 @@ matrix:
       bundler_args: --without rubocop acceptance
     - env: STRICT_VARIABLES="yes" CHECK="spec"
       bundler_args: --without rubocop acceptance
-    - env: STRICT_VARIABLES="yes" CHECK="beaker"
+    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_PUPPET_COLLECTION="puppet5"
       bundler_args: --without rubocop
       services: docker
       sudo: required
-    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_set="debian9"
+    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_set="debian9" BEAKER_PUPPET_COLLECTION="puppet5"
       bundler_args: --without rubocop
       services: docker
       sudo: required
