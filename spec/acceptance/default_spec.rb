@@ -22,7 +22,10 @@ describe 'vision_traefik' do
 
     describe file('/vision/data/traefik/traefik.toml') do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'skeletondirectory' }
+      it { is_expected.to contain 'managed by Puppet' }
+      it { is_expected.to contain 'checkNewVersion = false' }
+      it { is_expected.to contain 'docker' }
+      it { is_expected.to contain 'entryPoints' }
     end
 
     describe file('/vision/data/swarm/traefik.yaml') do
