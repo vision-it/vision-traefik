@@ -1,2 +1,3 @@
 ---
 vision_traefik::version: 'latest'
+vision_traefik::environment: []
