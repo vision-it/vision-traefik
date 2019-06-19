@@ -18,6 +18,11 @@ swarmModeRefreshSeconds = 60
   [entryPoints.https]
   address = ":443"
     [entryPoints.https.tls]
+<%- if @x509_certificate and @x509_key -%>
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/etc/traefik/cert.pem"
+      keyFile = "/etc/traefik/key.pem"
+<% end -%>
   [entryPoint.traefik]
   address = ":8080"
 
