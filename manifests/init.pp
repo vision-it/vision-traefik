@@ -40,6 +40,18 @@ class vision_traefik (
       require => File['/vision/data/traefik'],
     }
   }
+  
+  firewall { '100 allow HTTP traffic':
+    dport  => 80,
+    proto  => tcp,
+    action => accept,
+  }
+  
+  firewall { '100 allow HTTPS traffic':
+    dport  => 443,
+    proto  => tcp,
+    action => accept,
+  }
 
   contain ::vision_traefik::docker
 }
