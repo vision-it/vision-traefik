@@ -19,7 +19,14 @@ class vision_traefik::docker (
         'deploy'          => {
           'placement'     => {
             'constraints' => [ 'node.role == manager' ]
-          }
+          },
+          'labels'        => [
+            'traefik.port=8080',
+            'traefik.frontend.rule=PathPrefixStrip:/traefik',
+            'traefik.enable=true',
+            'traefik.frontend.whiteList.sourceRange=10.54.0.0/16,10.55.63.0/24',
+            'traefik.docker.network=vision_default',
+           ],
         },
         'ports'           => [
           {
