@@ -23,6 +23,9 @@ swarmModeRefreshSeconds = 60
       certFile = "/etc/traefik/cert.pem"
       keyFile = "/etc/traefik/key.pem"
 <% end -%>
+    [entryPoints.https.redirect]
+    regex = "^https://vision.fraunhofer.de/$"
+    replacement = "https://www.vision.fraunhofer.de/$1"
   [entryPoint.traefik]
   address = ":8080"
 
