@@ -4,6 +4,7 @@ class vision_traefik (
 
   Array $environment,
   String $version,
+  String $log_level,
   Optional[String] $x509_certificate = undef,
   Optional[String] $x509_key = undef,
 

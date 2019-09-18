@@ -4,11 +4,11 @@
 
 checkNewVersion = false
 defaultEntryPoints = ["http", "https"]
+logLevel = "<%= @log_level -%>"
 
 [docker]
 exposedByDefault = false
 swarmMode = true
-swarmModeRefreshSeconds = 60
 
 [entryPoints]
   [entryPoints.http]
