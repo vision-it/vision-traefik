@@ -15,10 +15,17 @@ class vision_traefik (
     ensure => directory,
   }
 
-  file { '/vision/data/traefik/traefik.toml':
+  file { 'traefik config':
     ensure  => present,
+    path    => '/vision/data/traefik/traefik.toml',
     content => template('vision_traefik/traefik.toml.erb'),
     require => File['/vision/data/traefik'],
+  }
+
+  exec { 'reload traefik':
+    command     => '/usr/bin/docker service update --force vision_traefik',
+    subscribe   => File['traefik config'],
+    refreshonly => true,
   }
 
   if $x509_certificate != undef {
