@@ -2,3 +2,4 @@
 vision_traefik::version: 'latest'
 vision_traefik::environment: []
 vision_traefik::log_level: 'ERROR' # traefik default
+vision_traefik::access_log: false

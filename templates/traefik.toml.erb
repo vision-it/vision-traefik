@@ -6,6 +6,16 @@ checkNewVersion = false
 defaultEntryPoints = ["http", "https"]
 logLevel = "<%= @log_level -%>"
 
+<% if @access_log -%>
+[accessLog]
+  filePath = "/etc/traefik/logs/access.log"
+  bufferingSize = 100
+  [accessLog.fields.headers]
+    defaultMode = "keep"
+    [accessLog.fields.headers.names]
+      "ClientAddr" = "redact"
+<% end -%>
+
 [docker]
 exposedByDefault = false
 swarmMode = true

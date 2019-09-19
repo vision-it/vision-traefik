@@ -5,12 +5,13 @@ class vision_traefik (
   Array $environment,
   String $version,
   String $log_level,
+  Boolean $access_log,
   Optional[String] $x509_certificate = undef,
   Optional[String] $x509_key = undef,
 
 ) {
 
-  file { '/vision/data/traefik':
+  file { ['/vision/data/traefik', '/vision/data/traefik/logs']:
     ensure => directory,
   }
 
