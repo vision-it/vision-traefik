@@ -41,6 +41,9 @@ RSpec.configure do |c|
 
         on host, git_clone
         on host, git_checkout
+
+      puts 'Mock Docker command'
+      on host, "/bin/cp -a /bin/true /usr/bin/docker"
       end
     end
   end

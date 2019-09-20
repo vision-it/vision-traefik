@@ -5,19 +5,27 @@ class vision_traefik (
   Array $environment,
   String $version,
   String $log_level,
+  Boolean $access_log,
   Optional[String] $x509_certificate = undef,
   Optional[String] $x509_key = undef,
 
 ) {
 
-  file { '/vision/data/traefik':
+  file { ['/vision/data/traefik', '/vision/data/traefik/logs']:
     ensure => directory,
   }
 
-  file { '/vision/data/traefik/traefik.toml':
+  file { 'traefik config':
     ensure  => present,
+    path    => '/vision/data/traefik/traefik.toml',
     content => template('vision_traefik/traefik.toml.erb'),
     require => File['/vision/data/traefik'],
+  }
+
+  exec { 'reload traefik':
+    command     => '/usr/bin/docker service update --force vision_traefik',
+    subscribe   => File['traefik config'],
+    refreshonly => true,
   }
 
   if $x509_certificate != undef {

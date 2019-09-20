@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'vision_traefik' do
-  context 'with defaults' do
+  context 'with certificates' do
     it 'run idempotently' do
       pp = <<-FILE
         # mock classes
