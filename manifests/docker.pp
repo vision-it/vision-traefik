@@ -23,11 +23,13 @@ class vision_traefik::docker (
             'constraints' => [ 'node.role == manager' ]
           },
           'labels'        => [
-            'traefik.port=8080',
-            'traefik.frontend.rule=PathPrefixStrip:/traefik',
             'traefik.enable=true',
-            'traefik.frontend.whiteList.sourceRange=10.54.0.0/16,10.55.63.0/24',
-            'traefik.docker.network=vision_default',
+            'traefik.http.routers.traefik.rule=PathPrefix(`/traefik`)',
+            'traefik.http.middlewares.traefik.stripprefix.prefixes=/traefik',
+            'traefik.http.routers.traefik.entrypoints=https',
+            'traefik.http.routers.traefik.tls=true',
+            'traefik.http.services.traefik.loadbalancer.server.port=8080',
+            'traefik.http.middlewares.traefik.ipwhitelist.sourcerange=10.54.0.0/16,10.55.63.0/24',
           ],
         },
         'ports'           => [
