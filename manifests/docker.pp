@@ -17,6 +17,8 @@ class vision_traefik::docker (
         ],
         'environment'     => $environment,
         'deploy'          => {
+          # deploy Traefik on each manager node, so port 80/443 is available everywhere
+          'mode'          => 'global',
           'placement'     => {
             'constraints' => [ 'node.role == manager' ]
           },
