@@ -1,0 +1,27 @@
+# This file is managed by Puppet; Do not edit
+# Configuration for central http-to-https redirect
+# https://docs.traefik.io/migration/v1-to-v2/#http-to-https-redirection-is-now-configured-on-routers
+
+<%- if @x509_certificate and @x509_key -%>
+[[tls.certificates]]
+  certFile = "/etc/traefik/cert.pem"
+  keyFile = "/etc/traefik/key.pem"
+<% end -%>
+
+[http.routers]
+  [http.routers.https-redirect]
+  rule = "HostRegexp(`{any:.*}`)"
+  middlewares = ["https-redirect"]
+  service = "noop"
+  entryPoints = ["http"]
+
+[http.middlewares]
+  [http.middlewares.https-redirect.redirectscheme]
+    scheme = "https"
+
+[http.services]
+  # noop service, the URL will be never called
+  # just for the catch-all https redirect
+  [http.services.noop.LoadBalancer]
+     [[http.services.noop.LoadBalancer.servers]]
+        url = ""

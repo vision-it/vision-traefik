@@ -12,7 +12,9 @@ class vision_traefik (
 
 ) {
 
-  file { ['/vision/data/traefik', '/vision/data/traefik/logs']:
+  file { ['/vision/data/traefik',
+          '/vision/data/traefik/logs',
+          '/vision/data/traefik/dynamic']:
     ensure => directory,
   }
 
@@ -21,6 +23,13 @@ class vision_traefik (
     path    => '/vision/data/traefik/traefik.toml',
     content => template('vision_traefik/traefik.toml.erb'),
     require => File['/vision/data/traefik'],
+  }
+
+  file { 'http redirect config':
+    ensure  => present,
+    path    => '/vision/data/traefik/dynamic/redirect.toml',
+    content => template('vision_traefik/redirect.toml.erb'),
+    require => File['/vision/data/traefik/dynamic'],
   }
 
   exec { 'reload traefik':
