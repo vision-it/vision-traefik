@@ -2,6 +2,7 @@
 class vision_traefik::docker (
 
   String $version    = $::vision_traefik::version,
+  String $whitelist  = $::vision_traefik::whitelist,
   Array $environment = $::vision_traefik::environment,
 
   ) {
@@ -29,7 +30,7 @@ class vision_traefik::docker (
             'traefik.http.routers.traefik.entrypoints=https',
             'traefik.http.routers.traefik.tls=true',
             'traefik.http.services.traefik.loadbalancer.server.port=8080',
-            'traefik.http.middlewares.traefik.ipwhitelist.sourcerange=10.54.0.0/16,10.55.63.0/24',
+            "traefik.http.middlewares.traefik.ipwhitelist.sourcerange=${whitelist}",
           ],
         },
         'ports'           => [

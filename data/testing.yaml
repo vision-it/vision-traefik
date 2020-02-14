@@ -1,3 +1,4 @@
 ---
 vision_traefik::environment: [ 'foo=bar' ]
 vision_traefik::version: 'abc123'
+vision_traefik::whitelist: '192.168.0.1/24'
