@@ -26,10 +26,11 @@ describe 'vision_traefik' do
       it { is_expected.to contain 'checkNewVersion = false' }
       it { is_expected.to contain 'docker' }
       it { is_expected.to contain 'entryPoints' }
+      it { is_expected.to contain 'api' }
       it { is_expected.not_to contain 'certificates' }
       it { is_expected.not_to contain 'certFile' }
       it { is_expected.not_to contain 'keyFile' }
-      it { is_expected.to contain 'logLevel = "ERROR"' }
+      it { is_expected.to contain 'level = "ERROR"' }
     end
 
     describe file('/vision/data/swarm/traefik.yaml') do

@@ -26,7 +26,7 @@ describe 'vision_traefik' do
       it { is_expected.to be_file }
       it { is_expected.to contain 'managed by Puppet' }
       it { is_expected.to contain 'entryPoints' }
-      it { is_expected.to contain 'logLevel' }
+      it { is_expected.to contain 'level =' }
       it { is_expected.to contain '[accessLog]' }
       it { is_expected.to contain 'filePath = "/etc/traefik/logs/access.log"' }
       it { is_expected.to contain '[accessLog.fields.headers.names]' }

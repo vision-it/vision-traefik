@@ -7,11 +7,11 @@
   exposedByDefault = false
   network = "default"
   swarmMode = true
-  swarmModeRefreshSeconds = "60s"
+  swarmModeRefreshSeconds = "60"
 
 <%- if @x509_certificate and @x509_key -%>
 [[tls.certificates]]
-  certFile = "etc/traefik/cert.pem"
+  certFile = "/etc/traefik/cert.pem"
   keyFile = "/etc/traefik/key.pem"
 <% end -%>
 
@@ -38,4 +38,6 @@
   [entryPoint.https]
     address = ":443"
 
-# TODO: expose Traefik dashboard
+[api]
+  insecure = true
+  dashboard = true
