@@ -6,6 +6,9 @@
 [[tls.certificates]]
   certFile = "/etc/traefik/cert.pem"
   keyFile = "/etc/traefik/key.pem"
+[tls.options]
+  [tls.options.default]
+    minVersion = "VersionTLS12"
 <% end -%>
 
 [http.routers]
