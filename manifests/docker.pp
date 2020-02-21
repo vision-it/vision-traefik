@@ -26,7 +26,8 @@ class vision_traefik::docker (
           'labels'        => [
             'traefik.enable=true',
             'traefik.http.services.traefik.loadbalancer.server.port=8080',
-            'traefik.http.routers.traefik.rule=PathPrefix(`/traefik`)',
+            'traefik.http.routers.traefik.rule=PathPrefix(`/traefik`) || PathPrefix(`/api`)',
+            'traefik.http.routers.traefik.service=api@internal',
             'traefik.http.routers.traefik.entrypoints=https',
             'traefik.http.routers.traefik.tls=true',
             'traefik.http.routers.traefik.middlewares=strip-traefik@docker,whitelist-traefik@docker',
