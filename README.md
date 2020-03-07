@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/vision-it/vision-traefik.svg)](https://travis-ci.org/vision-it/vision-traefik)
 
+**Note**: This module only works with Traefik v2+
+
 ## Usage
 
 Include in the *Puppetfile*:

@@ -2,6 +2,7 @@
 class vision_traefik::docker (
 
   String $version    = $::vision_traefik::version,
+  String $whitelist  = $::vision_traefik::whitelist,
   Array $environment = $::vision_traefik::environment,
 
   ) {
@@ -23,11 +24,15 @@ class vision_traefik::docker (
             'constraints' => [ 'node.role == manager' ]
           },
           'labels'        => [
-            'traefik.port=8080',
-            'traefik.frontend.rule=PathPrefixStrip:/traefik',
             'traefik.enable=true',
-            'traefik.frontend.whiteList.sourceRange=10.54.0.0/16,10.55.63.0/24',
-            'traefik.docker.network=vision_default',
+            'traefik.http.services.traefik.loadbalancer.server.port=8080',
+            'traefik.http.routers.traefik.rule=PathPrefix(`/traefik`) || PathPrefix(`/api`)',
+            'traefik.http.routers.traefik.service=api@internal',
+            'traefik.http.routers.traefik.entrypoints=https',
+            'traefik.http.routers.traefik.tls=true',
+            'traefik.http.routers.traefik.middlewares=strip-traefik@docker,whitelist-traefik@docker',
+            'traefik.http.middlewares.strip-traefik.stripprefix.prefixes=/traefik',
+            "traefik.http.middlewares.whitelist-traefik.ipwhitelist.sourcerange=${whitelist}",
           ],
         },
         'ports'           => [

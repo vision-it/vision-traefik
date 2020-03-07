@@ -23,11 +23,8 @@ describe 'vision_traefik' do
     end
   end
 
-    describe file('/vision/data/traefik/traefik.toml') do
+    describe file('/vision/data/traefik/dynamic/redirect.toml') do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'managed by Puppet' }
-      it { is_expected.to contain 'entryPoints' }
-      it { is_expected.to contain '[[entryPoints.https.tls.certificates]]' }
       it { is_expected.to contain 'certFile = "/etc/traefik/cert.pem"' }
       it { is_expected.to contain 'keyFile = "/etc/traefik/key.pem"' }
     end

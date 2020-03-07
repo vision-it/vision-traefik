@@ -1,10 +1,20 @@
 # This file is managed by Puppet; Do not edit
-# traefik.toml - Traefik configuration file
+# traefik.toml - Traefik v2 configuration file
 # https://docs.traefik.io/configuration/commons/
 
-checkNewVersion = false
-defaultEntryPoints = ["http", "https"]
-logLevel = "<%= @log_level -%>"
+[providers.docker]
+  endpoint = "unix:///var/run/docker.sock"
+  exposedByDefault = false
+  network = "vision_default"
+  swarmMode = true
+  swarmModeRefreshSeconds = "60"
+
+[log]
+  level = "<%= @log_level -%>"
+
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
 
 <% if @access_log -%>
 [accessLog]
@@ -16,28 +26,17 @@ logLevel = "<%= @log_level -%>"
       "ClientAddr" = "redact"
 <% end -%>
 
-[docker]
-exposedByDefault = false
-swarmMode = true
-
 [entryPoints]
   [entryPoints.http]
-  address = ":80"
-    [entryPoints.http.redirect]
-    entryPoint = "https"
+    address = ":80"
   [entryPoints.https]
-  address = ":443"
-    [entryPoints.https.tls]
-<%- if @x509_certificate and @x509_key -%>
-      [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/traefik/cert.pem"
-      keyFile = "/etc/traefik/key.pem"
-<% end -%>
-    [entryPoints.https.redirect]
-    regex = "^https://vision.fraunhofer.de/$"
-    replacement = "https://www.vision.fraunhofer.de/$1"
-  [entryPoint.traefik]
-  address = ":8080"
+    address = ":443"
+  [entryPoints.traefik]
+    address = ":8080"
 
 [api]
-entryPoint = "traefik"
+  insecure = true
+  dashboard = true
+
+[providers.file]
+  directory = "/etc/traefik/dynamic/"

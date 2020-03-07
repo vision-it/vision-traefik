@@ -5,13 +5,16 @@ class vision_traefik (
   Array $environment,
   String $version,
   String $log_level,
+  String $whitelist, # For Traefik UI
   Boolean $access_log,
   Optional[String] $x509_certificate = undef,
   Optional[String] $x509_key = undef,
 
 ) {
 
-  file { ['/vision/data/traefik', '/vision/data/traefik/logs']:
+  file { ['/vision/data/traefik',
+          '/vision/data/traefik/logs',
+          '/vision/data/traefik/dynamic']:
     ensure => directory,
   }
 
@@ -20,6 +23,13 @@ class vision_traefik (
     path    => '/vision/data/traefik/traefik.toml',
     content => template('vision_traefik/traefik.toml.erb'),
     require => File['/vision/data/traefik'],
+  }
+
+  file { 'http redirect config':
+    ensure  => present,
+    path    => '/vision/data/traefik/dynamic/redirect.toml',
+    content => template('vision_traefik/redirect.toml.erb'),
+    require => File['/vision/data/traefik/dynamic'],
   }
 
   exec { 'reload traefik':
