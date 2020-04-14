@@ -5,7 +5,7 @@ class vision_traefik::docker (
   String $whitelist  = $::vision_traefik::whitelist,
   Array $environment = $::vision_traefik::environment,
 
-  ) {
+) {
 
   $compose = {
     'version' => '3.7',
@@ -37,16 +37,16 @@ class vision_traefik::docker (
         },
         'ports'           => [
           {
-            'target' => 80,
+            'target'    => 80,
             'published' => 80,
-            'protocol' => 'tcp',
-            'mode' => 'host',
+            'protocol'  => 'tcp',
+            'mode'      => 'host',
           },
           {
-            'target' => 443,
+            'target'    => 443,
             'published' => 443,
-            'protocol' => 'tcp',
-            'mode' => 'host',
+            'protocol'  => 'tcp',
+            'mode'      => 'host',
           },
         ],
       }

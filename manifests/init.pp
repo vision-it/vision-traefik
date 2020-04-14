@@ -25,7 +25,7 @@ class vision_traefik (
     require => File['/vision/data/traefik'],
   }
 
-  file { 'http redirect config':
+  file { 'redirect config':
     ensure  => present,
     path    => '/vision/data/traefik/dynamic/redirect.toml',
     content => template('vision_traefik/redirect.toml.erb'),
