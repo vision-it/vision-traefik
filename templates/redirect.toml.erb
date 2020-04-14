@@ -12,15 +12,18 @@
 <% end -%>
 
 [http.routers]
-  [http.routers.https-redirect]
-  rule = "HostRegexp(`{any:.*}`)"
-  middlewares = ["https-redirect"]
-  service = "noop"
-  entryPoints = ["http"]
+  [http.routers.default-redirects]
+    rule = "Host(`vision.fraunhofer.de`) && Path(`/`)"
+    middlewares = ["www-redirect"]
+    service = "noop"
+    entryPoints = ["https", "http"]
+    [http.routers.default-redirects.tls]
 
 [http.middlewares]
-  [http.middlewares.https-redirect.redirectscheme]
-    scheme = "https"
+  [http.middlewares.www-redirect.redirectregex]
+    regex = "^https?://vision.fraunhofer.de"
+    replacement = "https://www.vision.fraunhofer.de/"
+    permanent = true
 
 [http.services]
   # noop service, the URL will be never called
