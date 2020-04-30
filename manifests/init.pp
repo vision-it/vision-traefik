@@ -5,6 +5,7 @@ class vision_traefik (
   Array $environment,
   String $version,
   String $log_level,
+  String $traefik_rule,
   String $whitelist, # For Traefik UI
   Boolean $access_log,
   Optional[String] $x509_certificate = undef,

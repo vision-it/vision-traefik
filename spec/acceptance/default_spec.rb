@@ -56,6 +56,7 @@ describe 'vision_traefik' do
     it { is_expected.to contain 'ports' }
     it { is_expected.to contain '80' }
     it { is_expected.to contain '443' }
+    it { is_expected.to contain 'example.com' }
     it { is_expected.to contain 'foo=bar' }
   end
 end

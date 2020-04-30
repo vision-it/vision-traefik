@@ -4,6 +4,7 @@ class vision_traefik::docker (
   String $version    = $::vision_traefik::version,
   String $whitelist  = $::vision_traefik::whitelist,
   Array $environment = $::vision_traefik::environment,
+  String $traefik_rule = $::vision_traefik::traefik_rule,
 
 ) {
 
@@ -26,7 +27,7 @@ class vision_traefik::docker (
           'labels'        => [
             'traefik.enable=true',
             'traefik.http.services.traefik.loadbalancer.server.port=8080',
-            'traefik.http.routers.traefik.rule=PathPrefix(`/traefik`)',
+            "traefik.http.routers.traefik.rule=Host(`${traefik_rule}`) && PathPrefix(`/traefik`) || Host(`${traefik_rule}`) && PathPrefix(`/api`)",
             'traefik.http.routers.traefik.service=api@internal',
             'traefik.http.routers.traefik.entrypoints=https',
             'traefik.http.routers.traefik.tls=true',
