@@ -8,6 +8,7 @@ class vision_traefik (
   String $traefik_rule,
   String $whitelist, # For Traefik UI
   Boolean $access_log,
+  Optional[String] $redirects = undef,
   Optional[String] $x509_certificate = undef,
   Optional[String] $x509_key = undef,
 
