@@ -26,6 +26,7 @@ describe 'vision_traefik' do
     describe file('/vision/data/traefik/dynamic/redirect.toml') do
       it { is_expected.to be_file }
       it { is_expected.to contain 'certFile = "/etc/traefik/cert.pem"' }
+      it { is_expected.to contain 'cipherSuites' }
       it { is_expected.to contain 'keyFile = "/etc/traefik/key.pem"' }
     end
 
