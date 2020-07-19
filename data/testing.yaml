@@ -2,4 +2,25 @@
 vision_traefik::environment: [ 'foo=bar' ]
 vision_traefik::version: 'abc123'
 vision_traefik::whitelist: '192.168.0.1/24'
+
+vision_traefik::redirects: |
+  [http.routers]
+    [http.routers.default-redirects]
+      rule = "Host(`example.de`) && Path(`/`)"
+      middlewares = ["www-redirect"]
+      service = "noop"
+      entryPoints = ["https", "http"]
+      [http.routers.default-redirects.tls]
+
+  [http.middlewares]
+    [http.middlewares.www-redirect.redirectregex]
+      regex = "^https?://example.de"
+      replacement = "https://www.example.de/"
+      permanent = true
+
+  [http.services]
+    [http.services.noop.LoadBalancer]
+       [[http.services.noop.LoadBalancer.servers]]
+         url = ""
+
 vision_traefik::traefik_rule: 'example.com'

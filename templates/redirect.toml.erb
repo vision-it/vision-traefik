@@ -22,23 +22,6 @@
       keyFile = "/etc/traefik/key.pem"
 <% end -%>
 
-[http.routers]
-  [http.routers.default-redirects]
-    rule = "Host(`vision.fraunhofer.de`) && Path(`/`)"
-    middlewares = ["www-redirect"]
-    service = "noop"
-    entryPoints = ["https", "http"]
-    [http.routers.default-redirects.tls]
-
-[http.middlewares]
-  [http.middlewares.www-redirect.redirectregex]
-    regex = "^https?://vision.fraunhofer.de"
-    replacement = "https://www.vision.fraunhofer.de/"
-    permanent = true
-
-[http.services]
-  # noop service, the URL will be never called
-  # just for the catch-all https redirect
-  [http.services.noop.LoadBalancer]
-     [[http.services.noop.LoadBalancer.servers]]
-        url = ""
+<%- if @redirects -%>
+<%= @redirects %>
+<% end -%>
