@@ -3,7 +3,7 @@
 # https://docs.traefik.io/configuration/commons/
 
 [providers.docker]
-  endpoint = "unix:///var/run/docker.sock"
+  endpoint = "tcp://vision_proxy:2375"
   exposedByDefault = false
   network = "vision_default"
   swarmMode = true

@@ -9,22 +9,37 @@ class vision_traefik::docker (
 ) {
 
   $compose = {
-    'version' => '3.7',
-    'services' => {
-      'traefik' => {
-        'image'           => "traefik:${version}",
+    'version'           => '3.7',
+    'services'          => {
+      'proxy' => {
+        'image'           => "tecnativa/docker-socket-proxy",
         'volumes'         => [
-          '/var/run/docker.sock:/var/run/docker.sock',
+          '/var/run/docker.sock:/var/run/docker.sock:ro',
+        ],
+        'environment'     => [
+          'CONTAINER=1',
+          'TASKS=1',
+          'SWARM=1',
+          'NETWORKS=1',
+          'SERVICES=1',
+        ],
+        'deploy'          => {
+          'mode'          => 'global',
+        }
+      },
+      'traefik'         => {
+        'image'           => "traefik:${version}",
+        'volumes'       => [
           '/vision/data/traefik/:/etc/traefik/',
         ],
-        'environment'     => $environment,
-        'deploy'          => {
+        'environment'   => $environment,
+        'deploy'        => {
           # deploy Traefik on each manager node, so port 80/443 is available everywhere
           'mode'          => 'global',
           'placement'     => {
             'constraints' => [ 'node.role == manager' ]
           },
-          'labels'        => [
+          'labels'      => [
             'traefik.enable=true',
             'traefik.http.services.traefik.loadbalancer.server.port=8080',
             "traefik.http.routers.traefik.rule=Host(`${traefik_rule}`) && PathPrefix(`/traefik`) || Host(`${traefik_rule}`) && PathPrefix(`/api`)",
@@ -41,7 +56,7 @@ class vision_traefik::docker (
             "traefik.http.middlewares.whitelist-traefik.ipwhitelist.sourcerange=${whitelist}",
           ],
         },
-        'ports'           => [
+        'ports'         => [
           {
             'target'    => 80,
             'published' => 80,
