@@ -14,6 +14,7 @@ describe 'vision_traefik' do
 
         file{ '/usr/bin/docker':
           ensure => present,
+          mode => '0755',
         }
 
         class { 'vision_traefik':
