@@ -12,6 +12,10 @@ describe 'vision_traefik' do
           ensure => directory,
         }
 
+        file{ '/usr/bin/docker':
+          ensure => present,
+        }
+
         class { 'vision_traefik':
           access_log => true,
         }
